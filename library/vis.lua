@@ -51,10 +51,10 @@ vis.win = nil
 vis.lexers = nil
 
 vis.options = {}
-vis.options.autoindent = false --{ai} (default false)
+vis.options.autoindent = false   --{ai} (default false)
 vis.options.changecolors = false --(default false)
-vis.options.escdelay = false --Milliseconds to wait before deciding whether an escape sequence should be treated as an ⟨Escape⟩ key (default 50)
-vis.options.ignorecase = false --Whether to ignore case when searching {ic} (default false)
+vis.options.escdelay = false     --Milliseconds to wait before deciding whether an escape sequence should be treated as an ⟨Escape⟩ key (default 50)
+vis.options.ignorecase = false   --Whether to ignore case when searching {ic} (default false)
 
 ---@alias loadmethod
 ---| "auto" #Tries the former for files smaller than 8Mb and the latter for  larger  ones
@@ -63,8 +63,10 @@ vis.options.ignorecase = false --Whether to ignore case when searching {ic} (def
 
 ---WARNING: modifying a memory mapped file in-place will cause data loss
 ---@type loadmethod
-vis.options.loadmethod = "auto" --How  existing  files  should  be loaded (default "auto")
-vis.options.shell = "/bin/bash" --User shell to use for external commands, overrides SHELL and shell field of password database /etc/passwd (default "/bin/sh")
+vis.options.loadmethod =
+"auto"                          --How  existing  files  should  be loaded (default "auto")
+vis.options.shell =
+"/bin/bash"                     --User shell to use for external commands, overrides SHELL and shell field of password database /etc/passwd (default "/bin/sh")
 
 ---Display a short message.
 ---The single line message will be displayed at the bottom of the screen and automatically hidden once a key is pressed.
@@ -101,6 +103,27 @@ function vis:unmap(mode, key) end
 ---@param message string the message to display
 function vis:message(message) end
 
----Create an iterator over all windows. 
+---Create an iterator over all windows.
 ---@return function #the new iterator
 function vis:windows() end
+
+---Register a custom `:`-command. 
+---
+---Usage
+---```
+---vis:command_register("foo", function(argv, force, win, selection, range)
+---	 for i,arg in ipairs(argv) do
+---		 print(i..": "..arg)
+---	 end
+---	 print("was command forced with ! "..(force and "yes" or "no"))
+---	 print(win.file.name)
+---	 print(selection.pos)
+---	 print(range ~= nil and ('['..range.start..', '..range.finish..']') or "invalid range")
+---	 return true;
+---end)
+---```
+---@param name string the command name
+---@param command function the Lua function implementing the command
+---@param help? string the single line help text as displayed in `:help` (optional)
+---@return boolean #whether the command has been successfully registered
+function vis:command_register(name, command, help) end
