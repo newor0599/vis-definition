@@ -51,10 +51,10 @@ vis.win = nil
 vis.lexers = nil
 
 vis.options = {}
-vis.options.autoindent = false   --{ai} (default false)
+vis.options.autoindent = false --{ai} (default false)
 vis.options.changecolors = false --(default false)
-vis.options.escdelay = false     --Milliseconds to wait before deciding whether an escape sequence should be treated as an ⟨Escape⟩ key (default 50)
-vis.options.ignorecase = false   --Whether to ignore case when searching {ic} (default false)
+vis.options.escdelay = false --Milliseconds to wait before deciding whether an escape sequence should be treated as an ⟨Escape⟩ key (default 50)
+vis.options.ignorecase = false --Whether to ignore case when searching {ic} (default false)
 
 ---@alias loadmethod
 ---| "auto" #Tries the former for files smaller than 8Mb and the latter for  larger  ones
@@ -63,10 +63,8 @@ vis.options.ignorecase = false   --Whether to ignore case when searching {ic} (d
 
 ---WARNING: modifying a memory mapped file in-place will cause data loss
 ---@type loadmethod
-vis.options.loadmethod =
-"auto"                          --How  existing  files  should  be loaded (default "auto")
-vis.options.shell =
-"/bin/bash"                     --User shell to use for external commands, overrides SHELL and shell field of password database /etc/passwd (default "/bin/sh")
+vis.options.loadmethod = "auto" --How  existing  files  should  be loaded (default "auto")
+vis.options.shell = "/bin/bash" --User shell to use for external commands, overrides SHELL and shell field of password database /etc/passwd (default "/bin/sh")
 
 ---Display a short message.
 ---The single line message will be displayed at the bottom of the screen and automatically hidden once a key is pressed.
@@ -107,7 +105,7 @@ function vis:message(message) end
 ---@return function #the new iterator
 function vis:windows() end
 
----Register a custom `:`-command. 
+---Register a custom `:`-command.
 ---
 ---Usage
 ---```
@@ -127,3 +125,11 @@ function vis:windows() end
 ---@param help? string the single line help text as displayed in `:help` (optional)
 ---@return boolean #whether the command has been successfully registered
 function vis:command_register(name, command, help) end
+
+--- Terminate editor process.
+--- 
+--- Termination happens upon the next iteration of the main event loop. This means the calling Lua code will be executed further until it eventually hands over control to the editor core. The exit status of the most recent call is used.
+--- 
+--- All unsaved changes will be lost! 
+---@param code integer the exit status returned to the operating system
+function vis:exit(code) end
