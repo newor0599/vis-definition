@@ -127,9 +127,14 @@ function vis:windows() end
 function vis:command_register(name, command, help) end
 
 --- Terminate editor process.
---- 
+---
 --- Termination happens upon the next iteration of the main event loop. This means the calling Lua code will be executed further until it eventually hands over control to the editor core. The exit status of the most recent call is used.
---- 
---- All unsaved changes will be lost! 
+---
+--- All unsaved changes will be lost!
 ---@param code integer the exit status returned to the operating system
 function vis:exit(code) end
+
+---Redraw complete user interface.
+---
+---Will trigger redraw events, make sure to avoid recursive events. 
+function vis:redraw() end

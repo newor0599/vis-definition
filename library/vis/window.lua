@@ -82,3 +82,8 @@ vis.window.viewport = {}
 ---@param y integer
 ---@return boolean #false if the coordinates would be outside the window's dimensions
 function vis.window:style_pos(id, x, y) end
+
+--- Change syntax lexer to use for this window 
+---@param syntax string the syntax lexer name or `nil` to disable syntax highlighting
+---@return boolean #whether the lexer could be changed 
+function vis.window:set_syntax(syntax) end
